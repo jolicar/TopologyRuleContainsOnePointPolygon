@@ -1,5 +1,5 @@
 # Contains One Point Topology Rule
-![TopologyRuleContainsOnePointPolygon]()
+![TopologyRuleContainsOnePointPolygon](https://github.com/jolicar/TopologyRuleContainsOnePointPolygon/blob/master/img/TP00RU02_img1.png)
 * **Rule type:** *Polygon rule*
 * **Primary dataset:** Polygon dataset (2D, 2DM, 3D and 3DM) (*Multygeometry allowed*)
 * **Secundary dataset:** Point dataset (2D, 2DM, 3D and 3DM) (*Multygeometry allowed*)
