@@ -26,7 +26,7 @@ This test case checks the topology rule when we use incorrect 2D point datasets 
 
 ### Expected result
 
-The expected results are the *Inspector de errores del Plan de topologia* window has one record. The polygons with ID equals to 1 and 2 does false the rule. Polygon ID=1 has two internal point and polygon ID=2 dont have any internal 2D point.
+The expected results are the *Inspector de errores del Plan de topologia* window has two records. The polygons with ID equals to 1 and 2 does false the rule. Polygon ID=1 has two internal point and polygon ID=2 dont have any internal 2D point.
 
 
 ### Bug report
