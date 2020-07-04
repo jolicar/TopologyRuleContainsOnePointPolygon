@@ -37,4 +37,3 @@ https://redmine.gvsig.net/redmine/projects/gvsig-desktop/issues .
 
 [Open a a new issue of this test](https://redmine.gvsig.net/redmine/projects/gvsig-desktop/issues/new?issue[subject]=TP00RU02CP0001+Test+that+2D+points+are+inside+2D+polygons+but+one+polygon+dont+have+any+internal+point+and+other+polygon+has+two+internal+points)
 
-)
