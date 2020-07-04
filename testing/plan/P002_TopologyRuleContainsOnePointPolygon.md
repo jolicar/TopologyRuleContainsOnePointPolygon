@@ -1,4 +1,4 @@
-# P000 Test plan "Contains Point" topology rule for polygons.
+# P002 Test plan "Contains One Point" topology rule for polygons.
 
 [TOC html levels=2]
 
