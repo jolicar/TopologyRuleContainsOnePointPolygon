@@ -10,10 +10,10 @@ class DeletePolygonAction(AbstractTopologyRuleAction):
     def __init__(self):
         AbstractTopologyRuleAction.__init__(
             self,
-      "containsPointPolygon",
+      "containsOnePointPolygon",
             "DeletePolygonAction",
             "Delete Polygon Action",
-            "The delete action removes polygon features for cases when Contains Point Topology Rule it is false. The rule evaluates all the polygons. If each polygon have at least one point inside, the rule returns True. The points has to fall within the polygon's area, not on the boundary or out of it."
+            "The delete action removes polygon features for cases when Contains One Point Topology Rule it is false. The rule evaluates all the polygons. If each polygon have only one point inside, the rule returns True. The points has to fall within the polygon's area, not on the boundary or out of it."
         )
     
     def execute(self, rule, line, parameters):

@@ -32,19 +32,21 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
 
   def contains(self, polygon1, dataSet2): 
     if dataSet2.getSpatialIndex() != None:
+      i=0
       for featureReference in dataSet2.query(polygon1): # change query for getFeaturesThatEnvelopeIntersectsWith
         feature2 = featureReference.getFeature()
         point2 = feature2.getDefaultGeometry()
         proj2=point2.getProjection()
         point2 = point2.force2D()
         point2.setProjection(proj2)
-        i=0
         if polygon1.contains(point2):
           i+=1
-        if i==1:
-          return  True
-      return False
+        if i>1:
+          return False
+      if i==1:
+        return True
 
+    store2 = dataSet2.getFeatureStore()
     if self.geomName==None:
       store2 = dataSet2.getFeatureStore()
       self.geomName = store2.getDefaultFeatureType().getDefaultGeometryAttributeName()
@@ -59,7 +61,9 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
         )
       ).toString()
     )
-    if dataSet2.findFirst(self.expression) != None:
+    
+    fSet2=store2.getFeatureSet(self.expression)
+    if fSet2.getSize()==1:
       return True
     return False
 
@@ -68,6 +72,7 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
     buffer1 = polygon1.buffer(self.getTolerance())
     
     if dataSet2.getSpatialIndex() != None:
+      i=0
       for featureReference in dataSet2.query(buffer1): # change query for getFeaturesThatEnvelopeIntersectsWith
         feature2 = featureReference.getFeature()
         point2 = feature2.getDefaultGeometry()
@@ -75,11 +80,14 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
         point2 = point2.force2D()
         point2.setProjection(proj2)
         if buffer1.intersects(point2):
-          return  True
-      return False
+          i+=1
+        if i>1:
+          return False
+      if i==1:
+        return True
 
+    store2 = dataSet2.getFeatureStore()
     if self.geomName==None:
-      store2 = dataSet2.getFeatureStore()
       self.geomName = store2.getDefaultFeatureType().getDefaultGeometryAttributeName()
 
     self.expression.setPhrase(
@@ -93,7 +101,8 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
       ).toString()
     )
 
-    if dataSet2.findFirst(self.expression) != None:
+    fSet2=store2.getFeatureSet(self.expression)
+    if fSet2.getSize()==1:
       return True
     return False
 
@@ -105,12 +114,11 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
       store2=dataSet2.getFeatureStore()
 
       if store1.getSRSDefaultGeometry()==store2.getSRSDefaultGeometry():
-        self.execute(self, taskStatus, report)
+        AbstractTopologyRule.execute(self, taskStatus, report)
       else:
         msgbox("Can't execute rule. The two datasets cant have a different projection")
         pass
 
-  
   def check(self, taskStatus, report, feature1): #feature1=polygon
     try:
       polygon1 = feature1.getDefaultGeometry()
@@ -119,7 +127,6 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
       geometryType1 = polygon1.getGeometryType()
       
       geomManager = GeometryLocator.getGeometryManager()
-      subtype = geom.D2
 
       mustConvert2D=(not geometryType1.getSubType() == geom.D2)
 
@@ -145,7 +152,7 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
             -1,
             -1,
             False,
-            "The polygon dont have any internal point.",
+            "The polygon dont have any internal point or has more than one internal point.",
             ""
           )
 
@@ -165,7 +172,7 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
             -1,
             -1,
             False,
-            "The multipolygon dont have any internal point.",
+            "The multipolygon dont have any internal point or has more than one internal point.",
             ""
         )
 
