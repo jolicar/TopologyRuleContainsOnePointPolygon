@@ -15,7 +15,6 @@ from org.gvsig.fmap.geom import GeometryLocator
 from deletePolygonAction import DeletePolygonAction
 from createPointAction import CreatePointAction
 
-from gvsig.commonsdialog import msgbox
 
 class ContainsOnePointPolygonRule(AbstractTopologyRule):
 
@@ -116,8 +115,20 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
       if store1.getSRSDefaultGeometry()==store2.getSRSDefaultGeometry():
         AbstractTopologyRule.execute(self, taskStatus, report)
       else:
-        msgbox("Can't execute rule. The two datasets cant have a different projection")
-        pass
+        report.addLine(self,
+          self.getDataSet1(),
+          self.getDataSet2(),
+          None,
+          None,
+          None,
+          None,
+          -1,
+          -1,
+          False,
+          "Can't execute rule. The two datasets cant have a different projection.",
+          ""
+        )
+        #msgbox("Can't execute rule. The two datasets cant have a different projection.")
 
   def check(self, taskStatus, report, feature1): #feature1=polygon
     try:
@@ -165,8 +176,8 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
           report.addLine(self,
             self.getDataSet1(),
             self.getDataSet2(),
-            multipolygon,
-            multipolygon,
+            polygon1,
+            polygon1,
             feature1.getReference(), 
             None,
             -1,
@@ -180,8 +191,8 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
         report.addLine(self,
           self.getDataSet1(),
           self.getDataSet2(),
-          point1,
-          point1,
+          polygon1,
+          polygon1,
           feature1.getReference(),
           None,
           -1,
