@@ -10,10 +10,13 @@ from org.gvsig.fmap.geom import Geometry
 from org.gvsig.tools.util import ListBuilder
 from org.gvsig.topology.lib.api import TopologyLocator
 from org.gvsig.topology.lib.spi import AbstractTopologyRuleFactory, RuleResourceLoaderUtils
+ 
 
 from java.io import File
+from java.lang import IllegalStateException
 
 from containsOnePointPolygonRule import ContainsOnePointPolygonRule
+
 
 class ContainsOnePointPolygonRuleFactory(AbstractTopologyRuleFactory):
       
@@ -34,8 +37,14 @@ class ContainsOnePointPolygonRuleFactory(AbstractTopologyRuleFactory):
         self.load_from_resource(url, json)
     
     def createRule(self, plan, dataSet1, dataSet2, tolerance):
-        rule = ContainsOnePointPolygonRule(plan, self, tolerance, dataSet1, dataSet2)
-        return rule
+      #store1=dataSet1.getFeatureStore()
+      #store2=dataSet2.getFeatureStore()
+      
+      #if store1.getSRSDefaultGeometry()!=store2.getSRSDefaultGeometry():
+        #raise IllegalStateException("Can't execute rule. The two datasets cant have a different projection.")
+  
+      rule = ContainsOnePointPolygonRule(plan, self, tolerance, dataSet1, dataSet2)
+      return rule
 
 def selfRegister():
     try:

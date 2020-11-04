@@ -128,7 +128,7 @@ class ContainsOnePointPolygonRule(AbstractTopologyRule):
           "Can't execute rule. The two datasets cant have a different projection.",
           ""
         )
-        #msgbox("Can't execute rule. The two datasets cant have a different projection.")
+        
 
   def check(self, taskStatus, report, feature1): #feature1=polygon
     try:
